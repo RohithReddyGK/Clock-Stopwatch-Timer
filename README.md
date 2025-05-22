@@ -1,5 +1,10 @@
 # ⏰ Time Tools Web App
 
+![Status](https://img.shields.io/badge/status-active-brightgreen)
+![HTML](https://img.shields.io/badge/tech-HTML-orange)
+![CSS](https://img.shields.io/badge/tech-CSS-blue)
+![JavaScript](https://img.shields.io/badge/tech-JavaScript-yellow)
+
 This project is a responsive web-based utility that includes:
 - **🕐 Digital Clock**: Displays current local time in 12-hour format with AM/PM.
 - **⏱ Stopwatch**: Allows you to start, pause, and reset a running stopwatch.
