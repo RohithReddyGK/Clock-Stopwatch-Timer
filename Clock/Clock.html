@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Tools</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 30px;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background-color:lightblue;
+            color: #1f2937;
+        }
+
+        #heading {
+            text-align: center;
+            color: #000;
+            margin-bottom: 40px;
+            font-size:50px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1500px;
+            margin: 0 auto;
+            padding-top: 110px;
+        }
+
+        .box {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .clock-box {
+            background-image: url(Images/Digital_Clock.jpg);
+            background-size: cover;
+            background-position: center;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .clock-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            /* dimming effect */
+            z-index: 0;
+        }
+
+        .clock-box * {
+            position: relative;
+            z-index: 1;
+            /* Keep text/buttons above overlay */
+        }
+
+        .stopwatch-box {
+            background-image: url(Images/Stopwatch.avif);
+            background-size: cover;
+            background-position: center;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stopwatch-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            /* dimming effect */
+            z-index: 0;
+        }
+
+        .stopwatch-box * {
+            position: relative;
+            z-index: 1;
+            /* Keep text/buttons above overlay */
+        }
+
+        .timer-box {
+            background-image: url(Images/Timer.jpg);
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .timer-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            /* dimming effect */
+            z-index: 0;
+        }
+
+        .timer-box * {
+            position: relative;
+            z-index: 1;
+            /* Keep text/buttons above overlay */
+        }
+
+        .box h1 {
+            color: whitesmoke;
+        }
+
+        .time-display {
+            font-size: 32px;
+            margin: 20px 0;
+        }
+
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            font-size: 16px;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #1d4ed8;
+        }
+
+        input[type="number"] {
+            padding: 8px;
+            width: 60px;
+            margin: 5px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 id="heading">DIGITAL CLOCK / STOPWATCH / TIMER</h1>
+    <div class="grid">
+
+        <div class="box clock-box">
+            <h1>🕐 Digital Clock</h1>
+            <div id="clock" class="time-display">-- : -- : -- --</div>
+        </div>
+
+        <div class="box stopwatch-box">
+            <h1>⏱ Stopwatch</h1>
+            <div id="stopwatch" class="time-display">00:00:00</div>
+            <button onClick="startStopwatch()">Start</button>
+            <button onClick="pauseStopwatch()">Pause</button>
+            <button onClick="resetStopwatch()">Reset</button>
+        </div>
+
+        <div class="box timer-box">
+            <h1>⏳ Timer</h1>
+            <div>
+                <input type="number" id="hours" placeholder="HH" min="0" />:
+                <input type="number" id="minutes" placeholder="MM" min="0" />:
+                <input type="number" id="seconds" placeholder="SS" min="0" />
+            </div>
+            <div id="timer-display" class="time-display">00:00:00</div>
+            <button onClick="startTimer()">Start Timer</button>
+        </div>
+    </div>
+
+    <script>
+        setInterval(() => {
+            const now = new Date();
+            let hours = now.getHours();
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12 || 12;
+            document.getElementById("clock").textContent = `${hours}:${minutes}:${seconds} ${ampm}`;
+        }, 1000);
+
+        let stopwatchInterval;
+        let stopwatchTime = 0;
+        function updateStopwatchDisplay() {
+            const hrs = String(Math.floor(stopwatchTime / 3600)).padStart(2, '0');
+            const mins = String(Math.floor((stopwatchTime % 3600) / 60)).padStart(2, '0');
+            const secs = String(stopwatchTime % 60).padStart(2, '0');
+            document.getElementById("stopwatch").textContent = `${hrs}:${mins}:${secs}`;
+        }
+        function startStopwatch() {
+            if (!stopwatchInterval) {
+                stopwatchInterval = setInterval(() => {
+                    stopwatchTime++;
+                    updateStopwatchDisplay();
+                }, 1000);
+            }
+        }
+        function pauseStopwatch() {
+            clearInterval(stopwatchInterval);
+            stopwatchInterval = null;
+        }
+        function resetStopwatch() {
+            pauseStopwatch();
+            stopwatchTime = 0;
+            updateStopwatchDisplay();
+        }
+
+        let timerInterval;
+        function startTimer() {
+            let h = parseInt(document.getElementById("hours").value) || 0;
+            let m = parseInt(document.getElementById("minutes").value) || 0;
+            let s = parseInt(document.getElementById("seconds").value) || 0;
+            let totalSeconds = h * 3600 + m * 60 + s;
+            if (totalSeconds <= 0) {
+                alert("Please enter a valid time for the timer.");
+                return;
+            }
+
+            clearInterval(timerInterval);
+            function updateTimerDisplay() {
+                const hrs = String(Math.floor(totalSeconds / 3600)).padStart(2, '0');
+                const mins = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0');
+                const secs = String(totalSeconds % 60).padStart(2, '0');
+                document.getElementById("timer-display").textContent = `${hrs}:${mins}:${secs}`;
+            }
+
+            timerInterval = setInterval(() => {
+                if (totalSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    alert("⏰ Time's up!!");
+                }
+                else {
+                    if (totalSeconds === 15) {
+                        alert("⏳ Only 15 seconds remaining!!");
+                    }
+                    updateTimerDisplay();
+                    totalSeconds--;
+                }
+            }, 1000);
+
+            updateTimerDisplay();
+        }
+    </script>
+
+</body>
+
+</html>
