@@ -55,7 +55,8 @@ Clock/
 
 ## 📸 Screenshots
 
-*(Optional: Add screenshots here of each section - Clock, Stopwatch, Timer)*
+### 1️⃣ Light Mode
+<img src="https://github.com/user-attachments/assets/1ff8aa47-cf3f-42e4-9647-3a97c15f81ce" alt="Light Mode" width="700" height="450"/>
 
 ---
 
