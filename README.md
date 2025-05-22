@@ -60,6 +60,11 @@ Clock/
 
 ---
 
+### Netlify Badge
+[![Netlify Status](https://api.netlify.com/api/v1/badges/63b79885-8c38-4277-a57f-cacf9318e70b/deploy-status)](https://app.netlify.com/projects/clock-stopwatch-timer/deploys)
+
+---
+
 ## 🙋‍♂️ Author
 
 **Rohith Reddy.G.K**  
