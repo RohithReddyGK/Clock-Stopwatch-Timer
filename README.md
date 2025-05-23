@@ -14,12 +14,14 @@ This project is a responsive web-based utility that includes:
 
 ## 📁 Project Structure
 
+```
 Clock/
 ├── index.html 
 ├── Images/
-│ ├── Digital_Clock.jpg
-│ ├── Stopwatch.avif
-│ └── Timer.jpg
+  ├── Digital_Clock.jpg
+  ├── Stopwatch.avif
+  └── Timer.jpg
+```
 
 ---
 
